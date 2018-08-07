@@ -9,11 +9,8 @@ int main(){
 	
 	sort(arr, arr+10);
 	
-	//for(int index = 0; index < sizeof(arr)/sizeof(*arr); index++){
-	//	
-	//	cout << arr[index] << " " ;
-	//}
-	
+	// 1- true 
+	// 0 -false
 	cout <<  binarySearchRecursive(arr, size/2, 0,size-1, 12) << "\n";	
 	return 0;
 }
