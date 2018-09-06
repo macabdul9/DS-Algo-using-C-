@@ -85,6 +85,18 @@ int size(Node* head){
 	return cout;
 }
 //function to print to linked list
+/*
+  We can write recursive function to print the list
+  **untested code
+  void printList(Node* node){
+  	if(node == NULL){
+		return;
+	}else{
+		cout << node->data << " ";
+		printList(node->next);
+	}
+  }
+*/
 void printList(Node* head){
 	Node *tmp = head;
 	cout << "\nlinked list is :";
