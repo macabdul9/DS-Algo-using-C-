@@ -32,6 +32,10 @@ void isBalanced(string exp){
 	if(stack.empty()){
 		cout << "expression is balanced\n";
 		return;
+	}else{
+		cout << "expression is unbalanced\n";
+		return;
 	}
+
 
 }
