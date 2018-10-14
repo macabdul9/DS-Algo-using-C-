@@ -1,9 +1,12 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include "balancingParenth.h"
 using namespace std;
 
 void isBalanced(string exp);
+void show();
+
 int main(int argc, char const *argv[])
 {
 	string exp;
@@ -39,4 +42,6 @@ void isBalanced(string exp){
 
 
 }
- 
+void show(){
+	cout << "hello world\n";
+}
