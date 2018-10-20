@@ -32,6 +32,10 @@ void levelOrderRecursive(queue<Node*> queue);
 //search operation in BST
 bool search(Node* root, int target);
 
+//min element
+int min(Node* root);
+// max element
+int max(Node* root);
 
 int main(int argc, char const *argv[]){
 	/* code */
@@ -71,10 +75,12 @@ int main(int argc, char const *argv[]){
 	queue.push(root);
 	levelOrderRecursive(queue);
 	cout << endl;
+	cout << "min element = " << min(root) << endl;
+	cout << "max element = " << max(root) << endl;
 	int target;
 	while (true) {
 		/* code */
-		cout << "enter target to search in the tree" << endl;
+		cout << "enter target to search in tree" << endl;
 		cin>>target;
 		if(search(root, target))
 			cout << target << " is present in tree" << endl;
@@ -132,6 +138,7 @@ void preOrder(Node* root){
 	preOrder(root->left);
 	preOrder(root->right);
 }
+
 void inOrder(Node* root){
 	if (!root){
 		return;
@@ -140,6 +147,7 @@ void inOrder(Node* root){
 	cout<< root->data <<" ";
 	inOrder(root->right);
 }
+
 void postOrder(Node* root){
 	if (!root){
 		return;
@@ -148,6 +156,7 @@ void postOrder(Node* root){
 	postOrder(root->right);
 	cout<< root->data <<" ";
 }
+
 void levelOrder(Node* root){
 	if(!root)
 		return;
@@ -167,7 +176,6 @@ void levelOrder(Node* root){
 		cout << node->data << " ";
 		queue.pop();
 	}
-
 }
 
 void levelOrderRecursive(queue<Node*> queue){
@@ -182,6 +190,7 @@ void levelOrderRecursive(queue<Node*> queue){
 	queue.pop();
 	levelOrderRecursive(queue);
 }
+
 bool search(Node* root, int target){
 		if (!root) {
 			/* code */
@@ -197,4 +206,15 @@ bool search(Node* root, int target){
 		}else{
 			return search(root->right, target);
 		}
+}
+
+int min(Node* root){
+	if(!(root->left))
+		return root->data;
+	return min(root->left);
+}
+int max(Node* root){
+	if(!(root->right))
+		return root->data;
+	return max(root->right);
 }
