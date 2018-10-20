@@ -2,6 +2,9 @@
 #include <stack>
 #include <queue>
 #include <algorithm>
+#ifndef endl
+#define endl "\n"
+#endif
 
 using namespace std;
 
@@ -16,7 +19,7 @@ struct Node{
 Node* createNode(int data);
 //function to insert node into BST
 Node* insert(Node* root, int data);
-//function for pre-order traversal 
+//function for pre-order traversal
 void preOrder(Node* root);
 //function for post-order traversal
 void inOrder(Node* root);
@@ -25,6 +28,9 @@ void postOrder(Node* root);
 //function for level order traversal
 void levelOrder(Node* root);
 void levelOrderRecursive(queue<Node*> queue);
+
+//search operation in BST
+bool search(Node* root, int target);
 
 
 int main(int argc, char const *argv[]){
@@ -46,7 +52,7 @@ int main(int argc, char const *argv[]){
 	root = insert(root, 4);
 	root = insert(root, 11);
 	root = insert(root, 6);
-										           
+
 
 	cout << "pre-order traversal: ";
 	preOrder(root);
@@ -65,6 +71,16 @@ int main(int argc, char const *argv[]){
 	queue.push(root);
 	levelOrderRecursive(queue);
 	cout << endl;
+	int target;
+	while (true) {
+		/* code */
+		cout << "enter target to search in the tree" << endl;
+		cin>>target;
+		if(search(root, target))
+			cout << target << " is present in tree" << endl;
+		else
+			cout << target << " is not present in tree" << endl;
+	}
 	return 0;
 }
 Node* createNode(int data){
@@ -75,10 +91,10 @@ Node* createNode(int data){
 	return node;
 }
 Node* insert(Node* root, int data){
-	//when BST is empty and to reach the 
+	//when BST is empty and to reach the
 	if(!root) {
 		Node* node = createNode(data);
-		return node; 
+		return node;
 	}
 	if (data < root->data )
 	{
@@ -95,18 +111,18 @@ Node* insert(Node* root, int data){
 			   |
 			   9
 			/    \
-		   3     10
-		/    \      \
-	  1 	  7      19
-	/  \     /      /   \
-   0    2   5	  12 	31
- 	  	   / \	 /	\   
-     	  4   6 11	 17
-     	  			/
-     	  		   13
-		   	
-										
-*/  
+		 3     10
+	 /   \    \
+  1 	 7    19
+ / \  /   /   \
+0  2 5	  12 	31
+ 	  / \	 /	\
+   4  6 11	17
+     	  		/
+     	  	13
+
+
+*/
 void preOrder(Node* root){
 	if (!root)
 	{
@@ -122,7 +138,7 @@ void inOrder(Node* root){
 	}
 	inOrder(root->left);
 	cout<< root->data <<" ";
-	inOrder(root->right);		
+	inOrder(root->right);
 }
 void postOrder(Node* root){
 	if (!root){
@@ -165,4 +181,20 @@ void levelOrderRecursive(queue<Node*> queue){
 		queue.push(node->right);
 	queue.pop();
 	levelOrderRecursive(queue);
+}
+bool search(Node* root, int target){
+		if (!root) {
+			/* code */
+			return false;
+		}
+		if (root->data == target) {
+			/* code */
+			return true;
+		}
+		if (target < root->data) {
+			/* code */
+			return search(root->left, target);
+		}else{
+			return search(root->right, target);
+		}
 }
