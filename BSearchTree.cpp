@@ -17,17 +17,28 @@ struct Node{
 
 //function to create node;
 Node* createNode(int data);
+
 //function to insert node into BST
 Node* insert(Node* root, int data);
+
 //function for pre-order traversal
 void preOrder(Node* root);
+
 //function for post-order traversal
 void inOrder(Node* root);
+
 //function for post-order traversal
 void postOrder(Node* root);
+
 //function for level order traversal
 void levelOrder(Node* root);
 void levelOrderRecursive(queue<Node*> queue);
+
+//double order traversal
+void doubleOrder(Node* root);
+
+//triple order traversal
+void tripleOrder(Node* root);
 
 //search operation in BST
 bool search(Node* root, int target);
@@ -74,6 +85,12 @@ int main(int argc, char const *argv[]){
 	queue<Node*> queue;
 	queue.push(root);
 	levelOrderRecursive(queue);
+	cout << endl;
+	cout << "double-order traversal: ";
+	doubleOrder(root);
+	cout << endl;
+	cout << "triple-order traversal: ";
+	tripleOrder(root);
 	cout << endl;
 	cout << "min element = " << min(root) << endl;
 	cout << "max element = " << max(root) << endl;
@@ -213,8 +230,28 @@ int min(Node* root){
 		return root->data;
 	return min(root->left);
 }
+
 int max(Node* root){
 	if(!(root->right))
 		return root->data;
 	return max(root->right);
+}
+
+void doubleOrder(Node* root){
+	if(!root)
+		return;
+	cout << root->data <<" ";
+	doubleOrder(root->left);
+	cout << root->data << " ";
+	doubleOrder(root->right);
+}
+//double order traversal
+void tripleOrder(Node* root){
+	if(!root)
+		return;
+	cout << root->data << " ";
+	tripleOrder(root->left);
+	cout << root->data << " ";
+	tripleOrder(root->right);
+	cout << root->data << " ";
 }
