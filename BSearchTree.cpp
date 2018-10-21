@@ -245,7 +245,7 @@ void doubleOrder(Node* root){
 	cout << root->data << " ";
 	doubleOrder(root->right);
 }
-//double order traversal
+//triple order traversal
 void tripleOrder(Node* root){
 	if(!root)
 		return;
