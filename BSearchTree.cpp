@@ -51,6 +51,9 @@ int max(Node* root);
 int main(int argc, char const *argv[]){
 	/* code */
 	Node* root = NULL;
+	/*
+		Although root is not going to change after the first insert
+	*/
 	root = insert(root, 9);
 	root = insert(root, 10);
 	root = insert(root, 3);
@@ -67,8 +70,6 @@ int main(int argc, char const *argv[]){
 	root = insert(root, 4);
 	root = insert(root, 11);
 	root = insert(root, 6);
-
-
 	cout << "pre-order traversal: ";
 	preOrder(root);
 	cout << endl;
