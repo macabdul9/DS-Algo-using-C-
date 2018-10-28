@@ -48,6 +48,9 @@ int min(Node* root);
 // max element
 int max(Node* root);
 
+//function to delete a node from a BST
+void deleteNode(Node* root, int data);
+
 int main(int argc, char const *argv[]){
 	/* code */
 	Node* root = NULL;
@@ -82,28 +85,44 @@ int main(int argc, char const *argv[]){
 	cout << "level-order traversal: ";
 	levelOrder(root);
 	cout << endl;
-	cout << "level Order (Recursive) traversal: ";
-	queue<Node*> queue;
-	queue.push(root);
-	levelOrderRecursive(queue);
-	cout << endl;
-	cout << "double-order traversal: ";
-	doubleOrder(root);
-	cout << endl;
-	cout << "triple-order traversal: ";
-	tripleOrder(root);
-	cout << endl;
+	// cout << "level Order (Recursive) traversal: ";
+	// queue<Node*> queue;
+	// queue.push(root);
+	// levelOrderRecursive(queue);
+	// cout << endl;
+	// cout << "double-order traversal: ";
+	// doubleOrder(root);
+	// cout << endl;
+	// cout << "triple-order traversal: ";
+	// tripleOrder(root);
+	// cout << endl;
 	cout << "min element = " << min(root) << endl;
 	cout << "max element = " << max(root) << endl;
-	int target;
+	int target, data, choice;
 	while (true) {
 		/* code */
-		cout << "enter target to search in tree" << endl;
-		cin>>target;
-		if(search(root, target))
-			cout << target << " is present in tree" << endl;
-		else
-			cout << target << " is not present in tree" << endl;
+		cout << "choose opteration\n 1.search\n 2.delete :\n";
+		cin>>choice;
+		switch (choice) {
+			case 1: cout << "enter target to search in tree" << endl;
+							cin>>target;
+							if(search(root, target))
+								cout << target << " is present in tree" << endl;
+							else
+								cout << target << " is not present in tree" << endl;
+							break;
+			case 2: cout << "level-order traversal before deletion : ";
+							levelOrder(root);
+							cout << endl;
+							cout << "enter the node->data to delete it must be a in tree:\n";
+							cin >> data;
+							deleteNode(root, data);
+							cout << "level-order traversal after deletion : ";
+							levelOrder(root);
+							cout << endl;
+							break;
+			default: cout << "invalid choice !\n";
+		}
 	}
 	return 0;
 }
@@ -147,11 +166,103 @@ Node* insert(Node* root, int data){
 
 
 */
-void preOrder(Node* root){
-	if (!root)
-	{
+void deleteNode(Node* root, int data){
+	if(!root){
+		cout << "there is no such node ! \n";
 		return;
 	}
+	if(data < root->data ){
+		deleteNode(root->left, data);
+	}else if(data > root->data){
+		deleteNode(root->right, data);
+	}else{
+		/*there will be three scenrios
+		1. Node with no children
+		2. Node with only one children
+			Now there will be two cases
+			either node will have
+			i). left children or
+			ii). right
+		3. Node with two children
+		So lets deal with them ...cheers
+		*/
+		if(root->left == NULL and root->right == NULL){
+			root->data = 0;
+			root->left = root->right = NULL;
+			return;
+		}
+		else if (root->right == NULL){
+			//more than one ancestors
+			Node* tmp = root->left;
+			// if right of left of root does not exist
+			if(!tmp->right){
+				root->data = tmp->data;
+				root->left = tmp->left;
+				tmp = NULL;
+				return;
+			}
+			else {
+				while(tmp->right != NULL){
+					tmp = tmp->right;
+				}
+				swap(root->data, tmp->data);
+				deleteNode(tmp, tmp->data);
+				return;
+			}
+		}
+		else if (root->left == NULL){
+			//more than one ancestors
+			Node* tmp = root->right;
+			// if left of right of root does not exist
+			if(!tmp->left){
+				root->data = tmp->data;
+				root->right = tmp->right;
+				tmp = NULL;
+				return;
+			}
+			else {
+				while(tmp->left != NULL){
+					tmp = tmp->left;
+				}
+				swap(root->data, tmp->data);
+				deleteNode(tmp, tmp->data);
+				return;
+			}
+		}
+		else {
+			//means node that has to be delete has two children
+			Node* tmp = root->right;
+			while(tmp->left != NULL){
+				tmp = tmp->left;
+			}
+			swap(root->data, tmp->data);
+			deleteNode(tmp, tmp->data);
+			return;
+		}
+	}
+	return;
+}
+bool search(Node* root, int target){
+		if (!root) {
+			/* code */
+			return false;
+		}
+		if (root->data == target) {
+			/* code */
+			return true;
+		}
+		if (target < root->data) {
+			/* code */
+			return search(root->left, target);
+		}else{
+			return search(root->right, target);
+		}
+}
+
+
+void preOrder(Node* root){
+	if (!root)
+		return;
 	cout<< root->data <<" ";
 	preOrder(root->left);
 	preOrder(root->right);
@@ -209,22 +320,7 @@ void levelOrderRecursive(queue<Node*> queue){
 	levelOrderRecursive(queue);
 }
 
-bool search(Node* root, int target){
-		if (!root) {
-			/* code */
-			return false;
-		}
-		if (root->data == target) {
-			/* code */
-			return true;
-		}
-		if (target < root->data) {
-			/* code */
-			return search(root->left, target);
-		}else{
-			return search(root->right, target);
-		}
-}
+
 
 int min(Node* root){
 	if(!(root->left))
