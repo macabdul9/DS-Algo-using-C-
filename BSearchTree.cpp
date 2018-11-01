@@ -2,9 +2,9 @@
 #include <stack>
 #include <queue>
 #include <algorithm>
-#ifndef endl
+
 #define endl "\n"
-#endif
+
 
 using namespace std;
 
@@ -51,6 +51,17 @@ int max(Node* root);
 //function to delete a node from a BST
 void deleteNode(Node* root, int data);
 
+int getHeight(Node* root);
+
+int countNode(Node* root);
+
+int countLeafNode(Node* root);
+
+
+
+
+
+
 int main(int argc, char const *argv[]){
 	/* code */
 	Node* root = NULL;
@@ -58,21 +69,26 @@ int main(int argc, char const *argv[]){
 		Although root is not going to change after the first insert
 	*/
 	root = insert(root, 9);
-	root = insert(root, 10);
-	root = insert(root, 3);
-	root = insert(root, 7);
-	root = insert(root, 19);
-	root = insert(root, 31);
-	root = insert(root, 1);
-	root = insert(root, 12);
-	root = insert(root, 0);
-	root = insert(root, 5);
-	root = insert(root, 2);
-	root = insert(root, 17);
-	root = insert(root, 13);
-	root = insert(root, 4);
-	root = insert(root, 11);
-	root = insert(root, 6);
+	insert(root, 10);
+	insert(root, 3);
+	insert(root, 7);
+	// insert(root, -3);
+	insert(root, 0);
+	insert(root, -5);
+	//insert(root, 1);
+	// insert(root, 4);
+	// insert(root, -11);
+	insert(root, 19);
+	insert(root, 31);
+	insert(root, 12);
+	insert(root, 5);
+	insert(root, 2);
+	insert(root, 17);
+	insert(root, 13);
+	//insert(root, 11);
+	insert(root, 6);
+	//insert(root, 20);
+
 	cout << "pre-order traversal: ";
 	preOrder(root);
 	cout << endl;
@@ -98,10 +114,13 @@ int main(int argc, char const *argv[]){
 	// cout << endl;
 	cout << "min element = " << min(root) << endl;
 	cout << "max element = " << max(root) << endl;
+	cout << "height = " << getHeight(root) << endl;
+	cout << "total nodes = " << countNode(root) << endl;
+	cout << "total leaf nodes = " << countLeafNode(root) << endl;
 	int target, data, choice;
 	while (true) {
 		/* code */
-		cout << "choose opteration\n 1.search\n 2.delete :\n";
+		cout << "choose opteration\n1.search\n2.delete :\n";
 		cin>>choice;
 		switch (choice) {
 			case 1: cout << "enter target to search in tree" << endl;
@@ -111,16 +130,16 @@ int main(int argc, char const *argv[]){
 							else
 								cout << target << " is not present in tree" << endl;
 							break;
-			case 2: cout << "level-order traversal before deletion : ";
-							levelOrder(root);
-							cout << endl;
-							cout << "enter the node->data to delete it must be a in tree:\n";
-							cin >> data;
-							deleteNode(root, data);
-							cout << "level-order traversal after deletion : ";
-							levelOrder(root);
-							cout << endl;
-							break;
+			//case 2: cout << "level-order traversal before deletion : ";
+							//levelOrder(root);
+							//cout << endl;
+							//cout << "enter the node->data to delete it must be a in tree:\n";
+							//cin >> data;
+							//deleteNode(root, data);
+							//cout << "level-order traversal after deletion : ";
+							//levelOrder(root);
+							//cout << endl;
+							//break;
 			default: cout << "invalid choice !\n";
 		}
 	}
@@ -154,94 +173,220 @@ Node* insert(Node* root, int data){
 			   |
 			   9
 			/    \
-		 3     10
+		 3     11
 	 /   \    \
   1 	 7    19
- / \  /   /   \
+ / \  /    /  \
 0  2 5	  12 	31
  	  / \	 /	\
-   4  6 11	17
+   4  6 10	17
      	  		/
      	  	13
 
 
 */
-void deleteNode(Node* root, int data){
-	if(!root){
-		cout << "there is no such node ! \n";
-		return;
-	}
-	if(data < root->data ){
-		deleteNode(root->left, data);
-	}else if(data > root->data){
-		deleteNode(root->right, data);
-	}else{
-		/*there will be three scenrios
-		1. Node with no children
-		2. Node with only one children
-			Now there will be two cases
-			either node will have
-			i). left children or
-			ii). right
-		3. Node with two children
-		So lets deal with them ...cheers
-		*/
-		if(root->left == NULL and root->right == NULL){
-			root->data = 0;
-			root->left = root->right = NULL;
-			return;
-		}
-		else if (root->right == NULL){
-			//more than one ancestors
-			Node* tmp = root->left;
-			// if right of left of root does not exist
-			if(!tmp->right){
-				root->data = tmp->data;
-				root->left = tmp->left;
-				tmp = NULL;
-				return;
-			}
-			else {
-				while(tmp->right != NULL){
-					tmp = tmp->right;
-				}
-				swap(root->data, tmp->data);
-				deleteNode(tmp, tmp->data);
-				return;
-			}
-		}
-		else if (root->left == NULL){
-			//more than one ancestors
-			Node* tmp = root->right;
-			// if left of right of root does not exist
-			if(!tmp->left){
-				root->data = tmp->data;
-				root->right = tmp->right;
-				tmp = NULL;
-				return;
-			}
-			else {
-				while(tmp->left != NULL){
-					tmp = tmp->left;
-				}
-				swap(root->data, tmp->data);
-				deleteNode(tmp, tmp->data);
-				return;
-			}
-		}
-		else {
-			//means node that has to be delete has two children
-			Node* tmp = root->right;
-			while(tmp->left != NULL){
-				tmp = tmp->left;
-			}
-			swap(root->data, tmp->data);
-			deleteNode(tmp, tmp->data);
-			return;
-		}
-	}
-	return;
+
+int getHeight(Node* root){
+	if(!root or !root->left and !root->right)
+		return 0;
+	return 1 + max(getHeight(root->left), getHeight(root->right));
+
 }
+
+int countNode(Node* root){
+	if(!root)
+		return 0;
+	if(!root->left and !root->right)
+		return 1;
+	return 1 + countNode(root->left) + countNode(root->right);
+}
+
+int countLeafNode(Node* root){
+	if(!root)
+		return 0;
+	if(!root->left and !root->right)
+		return 1;
+	return countLeafNode(root->left) + countLeafNode(root->right);
+}
+
+// void deleteNode(Node* root, int data){
+// 	if(!root){
+// 		cout << "there is no such node ! \n";
+// 		return;
+// 	}
+// 	if(data < root->data){
+// 		deleteNode(root->left, data);
+// 	}else if(data > root->data){
+// 		deleteNode(root->right, data);
+// 	}else {
+// 		//element found
+// 		Node* tmp;
+// 		//if target  node has two children then replace with maz in left subtree
+// 		if(root->left && root->right){
+// 			tmp = root->left;
+// 			while (tmp->right) {
+// 				/* code */
+// 				tmp = tmp->right;
+// 			}
+// 			root->data = tmp->data;
+// 			deleteNode(root->left, tmp->data);
+// 		}else{
+// 			//if target node has only one node;
+// 			tmp = root;
+// 			if(!root->left)
+// 				root = root->right;
+// 			if(!root->right)
+// 				root = root->left;
+// 			free(tmp);
+// 		}
+// 	}
+//
+//
+//
+//
+//
+// 	/*
+// 	if(root->data == data){
+// 		Node* tmp1 = root->right;
+// 		if(tmp1->left == NULL){
+// 			swap(root->data, tmp1->data);
+// 			deleteNode(root, tmp1->data);
+// 			return;
+// 		}else{
+// 			Node* tmp2 = tmp1->left;
+// 			while (tmp2->left != NULL) {
+// 				/// code
+// 				tmp1 = tmp2;
+// 				tmp2 = tmp2->left;
+// 			}
+// 			swap(root->data, tmp2->data);
+// 			deleteNode(tmp1, tmp2->data);
+// 		}
+// 	}
+// 	//if target node is left child node
+// 	if(root->left->data == data){
+// 		Node* tmp1;
+// 		Node* tmp2;
+// 		//if target node delete has no child
+// 		if(root->left->left == NULL and root->left->right == NULL){
+// 			Node* tmp = root->left;
+// 			root->left = NULL;
+// 			delete(tmp);
+// 			return;
+// 		}
+// 		//if target node has only one child -left child only
+// 		else if(root->left->left != NULL and root->left->right == NULL){
+// 			tmp1 = root->left;
+// 			tmp2 = tmp1->left;
+// 			if(tmp2->right == NULL ){
+// 				root->left = tmp2;
+// 				tmp1->left = NULL;
+// 				delete(tmp1);
+// 				return;
+// 			}
+// 			while(tmp2->right != NULL){
+// 				tmp1 = tmp2;
+// 				tmp2 = tmp2->right;
+// 			}
+// 			swap(root->left->data, tmp2->data);
+// 			deleteNode(tmp1, tmp2->data);
+// 		}
+// 		//if target has only one child-right child only
+// 		else if(root->left->left == NULL and root->left->right != NULL){
+// 			tmp1 = root->left;
+// 			tmp2 = tmp1->right;
+// 			if(tmp2->left == NULL ){
+// 				root->left = tmp2;
+// 				tmp1->right = NULL;
+// 				delete(tmp1);
+// 				return;
+// 			}
+// 			while(tmp2->left != NULL){
+// 				tmp1 = tmp2;
+// 				tmp2 = tmp2->left;
+// 			}
+// 			swap(root->left->data, tmp2->data);
+// 			deleteNode(tmp1, tmp2->data);
+// 		}
+// 		//if target node has two children
+// 		else{
+// 			tmp1 = root->left;
+// 			tmp2 = tmp1->right;
+// 			while (tmp2->left != NULL) {
+// 				/// code
+// 				tmp1 = tmp2;
+// 				tmp2 = tmp2->left;
+// 			}
+// 			swap(root->left->data, tmp2->data);
+// 			deleteNode(tmp1, tmp2->data);
+// 		}
+// 	}else if(root->right->data == data){
+// 		Node* tmp1;
+// 		Node* tmp2;
+// 		//if target node delete has no child
+// 		if(root->right->left == NULL and root->right->right == NULL){
+// 			Node* tmp = root->right;
+// 			root->right = NULL;
+// 			delete(tmp);
+// 			return;
+// 		}
+// 		//if target node has only one child -left child only
+// 		else if(root->right->left != NULL and root->right->right == NULL){
+// 			tmp1 = root->right;
+// 			tmp2 = tmp1->left;
+// 			if(tmp2->right == NULL ){
+// 				root->right = tmp2;
+// 				tmp1->left = NULL;
+// 				delete(tmp1);
+// 				return;
+// 			}
+// 			while(tmp2->right != NULL){
+// 				tmp1 = tmp2;
+// 				tmp2 = tmp2->right;
+// 			}
+// 			swap(root->right->data, tmp2->data);
+// 			deleteNode(tmp1, tmp2->data);
+// 		}
+// 		//if target has only one child-right child only
+// 		else if(root->right->left == NULL and root->right->right != NULL){
+// 			tmp1 = root->right;
+// 			tmp2 = tmp1->right;
+// 			if(tmp2->left == NULL ){
+// 				root->right = tmp2;
+// 				tmp1->right = NULL;
+// 				delete(tmp1);
+// 				return;
+// 			}
+// 			while(tmp2->left != NULL){
+// 				tmp1 = tmp2;
+// 				tmp2 = tmp2->left;
+// 			}
+// 			swap(root->right->data, tmp2->data);
+// 			deleteNode(tmp1, tmp2->data);
+// 		}
+// 		//if target node has two children
+// 		else{
+// 			tmp1 = root->right;
+// 			tmp2 = tmp1->right;
+// 			while (tmp2->left != NULL) {
+// 				// code
+// 				tmp1 = tmp2;
+// 				tmp2 = tmp2->left;
+// 			}
+// 			swap(root->right->data, tmp2->data);
+// 			deleteNode(tmp1, tmp2->data);
+// 		}
+// 	}
+// 	else if(data < root->data){
+// 		deleteNode(root->left, data);
+// 	}
+// 	else if(data > root->data){
+// 		deleteNode(root->right, data);
+// 	}
+// 	*/
+// 	return;
+// }
+
 bool search(Node* root, int target){
 		if (!root) {
 			/* code */
@@ -258,7 +403,6 @@ bool search(Node* root, int target){
 			return search(root->right, target);
 		}
 }
-
 
 void preOrder(Node* root){
 	if (!root)
@@ -319,8 +463,6 @@ void levelOrderRecursive(queue<Node*> queue){
 	queue.pop();
 	levelOrderRecursive(queue);
 }
-
-
 
 int min(Node* root){
 	if(!(root->left))
