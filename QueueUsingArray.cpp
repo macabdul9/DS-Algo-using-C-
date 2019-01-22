@@ -1,6 +1,7 @@
 /*
   It is easy to implement queue in LL that's why
-  i haven't implement this by myself but copied from
+  i haven't implemented this using arrays by myself but copied from
+  http://electrofriends.com/
 */
 #include<iostream>
 
@@ -54,11 +55,11 @@ main()
       queue qu;
       while(1)
         {
-              cout <<"\n1.insert  2.delete  3.display  4.exit\nEnter ur choice";
+              cout <<"\n1.insert  2.delete  3.display  4.exit\nEnter ur choice : ";
               cin >> ch;
               switch(ch)
                 {
-                  case 1:    cout <<"enter the element";
+                  case 1:    cout <<"enter the element : ";
                            	 cin >> ch;
                              qu.insert(ch);
                              break;

@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
 					break;
 			default:cout<<"wrong choice\n";
 					break;
-					
+
 		}
 	}
 
@@ -61,7 +61,7 @@ Node* createNode(int data){
 
 }
 void printQueue(Queue ends){
-	//here front for forward print to print in reverse order we can take rear 
+	//here front for forward print to print in reverse order we can take rear
 	Node* tmp = ends.front;
 	cout << "Queue: ";
 	if (tmp == NULL){
@@ -76,7 +76,7 @@ void printQueue(Queue ends){
 }
 Queue enQue(Queue ends, int data){
 	Node* node = createNode(data);
-	
+
 	if (ends.front == NULL)
 	{
 		ends.front = node;
