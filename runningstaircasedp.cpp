@@ -30,7 +30,13 @@ typedef unsigned int uint;
 using namespace std;
 
 
-ll waysrecursion(ll steps){}
+ll waysrecursion(ll steps){
+    if(steps < 0) return 0;
+    if(steps == 0) return 1;
+    if(steps == 1) return 1;
+    if(steps == 2) return 2;
+    return waysrecursion(steps  - 1) + waysrecursion(steps - 2) + waysrecursion(steps - 3);
+}
 
 ll waysmemo(ll steps, ll memo[]){
     if(steps == 0) return 1; // you've reached on the top of the floor which is a legit way
@@ -66,13 +72,35 @@ int main(){
     dp[0] = 1;
     dp[1] = 1;
     dp[2] = 2;
-    ll n;
-    cin >> n;
-    //ll memo[n + 1] = {0};
-    //cout << waysmemo(n, memo);
-    //
-    cout << waysdp(n, 2, dp);
+    ll steps;
+    cin >> steps;
+    cout << waysdp(steps, 2, dp);
+    //ll memo[steps + 1] = {0};
 
+    /*
+    while(true){
+        cin >> steps;
+        ll memo[steps + 1]= {0};
+
+        auto start = chrono::high_resolution_clock::now();
+        cout << "recursion " << waysrecursion(steps) << " time = ";
+        auto finish = chrono::high_resolution_clock::now();
+        chrono::duration<double> elapsed = finish - start;
+        cout << fixed << elapsed.count() << endl;
+
+        auto start = chrono::high_resolution_clock::now();
+        cout << "dp " << waysdp(steps, 2, dp) << " time = ";
+        auto finish = chrono::high_resolution_clock::now();
+        chrono::duration<double> elapsed = finish - start;
+        cout << fixed << elapsed.count() << endl;
+
+        start = chrono::high_resolution_clock::now();
+        cout << "me " << waysmemo(steps, memo) << " time = ";
+        finish = chrono::high_resolution_clock::now();
+        elapsed = finish - start;
+        cout << fixed << elapsed.count() << endl;
+    }
+    */
     return 0;
 }
 
