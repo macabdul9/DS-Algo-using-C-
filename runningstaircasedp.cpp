@@ -1,7 +1,6 @@
 /*
  * @author    : macab (macab@debian)
  * @file      : runningstaircasedp
- * @created   : Sunday Feb 10, 2019 05:37:19 IST
 */
 #include<bits/stdc++.h>
 #define endl 		         "\n"
