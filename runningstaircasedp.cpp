@@ -41,7 +41,7 @@ ll waysmemo(ll steps, ll memo[]){
     }
     return memo[steps];
 }
-//this is fastest algorithm that works in O(n)-time complexity and O(1)-space complexity(needs only 3 extra space)
+
 ll waysdp(ll steps, ll count, ll dp[]){
 
         if(steps < count)
