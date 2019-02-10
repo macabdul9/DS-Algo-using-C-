@@ -68,10 +68,7 @@ ll waysdp(ll steps, ll count, ll dp[]){
 
 int main(){
     /*code goes here */
-    ll dp[3];
-    dp[0] = 1;
-    dp[1] = 1;
-    dp[2] = 2;
+    ll dp[3] = {1, 1, 2};
     ll steps;
     cin >> steps;
     cout << waysdp(steps, 2, dp);

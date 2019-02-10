@@ -28,22 +28,25 @@
 typedef long long int ll;
 typedef unsigned int uint;
 using namespace std;
-void stringpermutation(string str, int itr){
-    if(itr == str.length()){
-            cout << str << " ";
-            return;
+int total = 0;
+void stringpermutation(string str,int fixed){
+    if(fixed > str.length() - 1){
+        total++;
+        cout << str << " "<<endl;
+        return;
     }
-    swap(str[0], str[itr]);
-    stringpermutation(str, itr + 1);
-    swap(str[0], str[itr]);
-    stringpermutation(str, itr + 1);
 
+    for(int i = fixed ; i < str.length(); i++){
+        swap(str[fixed], str[i]);
+        stringpermutation(str, fixed + 1);
+
+    }
 }
 
 int main(){
     /*code goes here */
-    stringpermutation("abc", 0);
-
+    stringpermutation("abcd", 0);
+    cout<<total;
     return 0;
 }
 
