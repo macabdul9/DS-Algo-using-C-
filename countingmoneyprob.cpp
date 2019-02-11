@@ -32,16 +32,32 @@ using namespace std;
 
 mll notes_quant;
 const int M = 2000;
+const ll notes[] = {2000, 500, 200, 100, 50, 20, 10, 5, 2, 1};
 
-ll countingmoneyprob(ll amount, ll notes[], ll track){
-    if(!amount)return 0;
+/* this is greedy technique solution that might not work for every currency
+  const ll notes[] {1, 2, 5, 7, 10 20, 50, 100, 200, 500, 2000};
+  in the above notes suppose we want 14 then below solution will give 10, 2, 2
+  counting total = 3 Notes - 10 2 2
+  while optimal solution should have  total = 2 notes - 7 7
+*/
 
+ll countingmoneyprob(ll amount, ll trace){
+    if(!amount) return 0; // zero amount or no amount left
+    // this approach will take almost constant time woyalla 😊😎 O(1)
+    if(amount >=  notes[trace]){
+        notes_quant.insert(pll(notes[trace], amount / notes[trace] ));
+        return amount / notes[trace] + countingmoneyprob(amount % notes[trace],  trace + 1);
+    }else {
+        return countingmoneyprob(amount, trace + 1);
+    }
+
+    /*
     if(amount > M){
         notes_quant.insert(pii(M, amount/M));
-        return amount/M + countingmoneyprob(amount%M, notes, track);
+        return amount/M + countingmoneyprob(amount%M, notes, trace);
     }
     int i;
-    loopr(i, track , 0){
+    loopr(i, trace , 0){
         if(notes[i] <= amount){
             //cout << notes[i] << " "; // means this is a largest valid notes note
             if(notes_quant.find(notes[i]) != notes_quant.end())
@@ -50,18 +66,19 @@ ll countingmoneyprob(ll amount, ll notes[], ll track){
                     notes_quant.insert(pii(notes[i], 1));
 
             return 1 + countingmoneyprob(amount - notes[i], notes, i);
+
         }
     }
+    */
 }
 
 int main(){
     /*code goes here */
     // notes descrip
     ll amount ;
-    ll notes[] = {1, 2, 5, 10, 20, 50, 100, 200, 500, 2000};
     while(true){
         cin >> amount;
-        cout << endl << "minimum notes needed = " << countingmoneyprob(amount, notes, 9) << endl;
+        cout << "minimum notes needed = " << countingmoneyprob(amount,  0) << endl;
         cout << "notes\tquantity" << endl;
         for(mll::iterator itr = notes_quant.begin(); itr != notes_quant.end(); itr ++)
                 cout << itr->first << "\t" << itr->second << endl;
