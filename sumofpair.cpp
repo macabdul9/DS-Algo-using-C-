@@ -34,6 +34,7 @@ typedef unsigned int uint;
 using namespace std;
 
 // in this prob i gotta find the pair of elements of two array whose sum is ie. x
+<<<<<<< HEAD
 int total_pair = 0;
 void getpair(vl &v1, vl &v2, vector<vector<bool>> &marked, ll current_row, ll current_col, ll target){
 
@@ -52,6 +53,25 @@ void getpair(vl &v1, vl &v2, vector<vector<bool>> &marked, ll current_row, ll cu
             getpair(v1, v2, marked, current_row , current_col -1 , target);
         }else{
             return;
+=======
+
+ll getpair(vl &v1, vl &v2, vector<vector<bool>> &marked, ll current_row, ll current_col, ll target){
+
+    if(current_row > v1.size() - 1 or  current_col < 0) return 0;
+
+    if(v1[current_row] + v2[current_col] < target)
+            return getpair(v1, v2, marked, current_row + 1, current_col, target);
+    else if(v1[current_row] + v2[current_col] > target)
+            return getpair(v1, v2, marked, current_row, current_col - 1, target);
+    else{
+        if(!marked[current_row][current_col]){ // if a shell is unvisited
+            cout << v1[current_row] << " , " << v2[current_col] << endl;
+            marked[current_row][current_col] = true;
+            return 1 + getpair(v1, v2, marked, current_row + 1, current_col, target);
+            return 1 + getpair(v1, v2, marked, current_row, current_col - 1, target);
+        }else{
+            return 0;
+>>>>>>> e880a13af1370939a0db4e35c87151fd69a3e969
         }
     }
 }
@@ -65,6 +85,7 @@ int main(){
     ll m, n, target;
     cout << "enter size of both array and target,  array will be filled with random number less than 20 : " << endl;
     cin >> m >> n >> target ;
+<<<<<<< HEAD
     int  i, tmp;
     srand(time(0));
     loop(i, 0, m){
@@ -76,6 +97,17 @@ int main(){
         v2.push_back(rand()  % 100);
         //cin >> tmp;
         //v2.push_back(tmp);
+=======
+    int  i;
+    srand(time(0));
+    loop(i, 0, m){
+        v1.push_back(rand() % 15);
+        // v1.push_back(1);
+    }
+    loop(i, 0, n){
+        v2.push_back(rand() % 15);
+        // v2.push_back(1);
+>>>>>>> e880a13af1370939a0db4e35c87151fd69a3e969
     }
     // sort both vectors
     sort(v1.begin(), v1.end());
@@ -87,9 +119,14 @@ int main(){
     loop(i, 0, n)
             cout << v2[i] << " ";
     cout << endl;
+<<<<<<< HEAD
     vector<vector<bool> > marked(m, vector<bool>(n, false));
     getpair(v1, v2, marked, 0, v2.size() - 1, target);
     cout <<"\ntotal pairs = " << total_pair << endl;
+=======
+    vector<vector<bool> > marked(10, vector<bool>(10, false));
+    cout << "total pair " << getpair(v1, v2, marked, 0, v2.size() - 1, target);
+>>>>>>> e880a13af1370939a0db4e35c87151fd69a3e969
 
 
     /*
