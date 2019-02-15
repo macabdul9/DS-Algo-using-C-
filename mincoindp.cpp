@@ -1,7 +1,7 @@
 /*
  * @author    : macab (macab@debian)
- * @file      : fibdp
- * @created   : Monday Feb 11, 2019 07:39:40 IST
+ * @file      : mincoindp
+ * @created   : Thursday Feb 14, 2019 07:42:18 IST
 */
 #include<bits/stdc++.h>
 #define endl 		         "\n"
@@ -25,34 +25,31 @@
 #define si                    set<int>
 #define ss                    set<string>
 #define mii                   map<int, int>
+#define msi                   map<string, int>
+#define umii                  unordered_map<int, int>
+#define umsi                  unordered_map<string, int>
 typedef long long int ll;
 typedef unsigned int uint;
 using namespace std;
 
-ll fibdp(ll n, ll walk, ll dp[]){
-    if(n < 1) return 0;
-    if(n < 3) return 1;
-    if(walk == n)return dp[1];
-    ll tmp = dp[0] + dp[1];
-    dp[0] = dp[1];
-    dp[1] = tmp;
-    return fibdp(n, walk + 1, dp);
+/*
+ * source : https://codingblocks.com/resources/dp-webinar/
+ * */
+const int coin[] = {1, 7, 10 };
+int dp[MAX] = {0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 1};
+
+int getmincoin(int n){
+    if( n < 11) return dp[n];
+
+    
 
 }
 
 int main(){
-    /*code goes here */
-    int test ;
-    ll n;
-    cin >> test;
-    while(test -- > 0){
-        ll *dp = new ll[2];
-        dp[0] = 1;
-        dp[1] = 1;
-        cin >> n;
-        cout << fibdp(n, 2, dp);
-        delete []dp;
-    }
+    /*code goes here*/
+    int  n ;
+    cin >> n;
+    cout << "min coin = " << getmincoin(n);
     return 0;
 }
 

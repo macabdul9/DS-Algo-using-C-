@@ -1,7 +1,7 @@
 /*
  * @author    : macab (macab@debian)
- * @file      : fibdp
- * @created   : Monday Feb 11, 2019 07:39:40 IST
+ * @file      : coinchange
+ * @created   : Saturday Feb 16, 2019 03:35:02 IST
 */
 #include<bits/stdc++.h>
 #define endl 		         "\n"
@@ -25,34 +25,30 @@
 #define si                    set<int>
 #define ss                    set<string>
 #define mii                   map<int, int>
+#define msi                   map<string, int>
+#define umii                  unordered_map<int, int>
+#define umsi                  unordered_map<string, int>
 typedef long long int ll;
 typedef unsigned int uint;
 using namespace std;
+int coin[] = {10, 7, 1};
+int coinchange(int amount){
+    if(amount < 7) return 1;
+    if(amount == 7) return 1;
+    if(amount == 10) return 1;
 
-ll fibdp(ll n, ll walk, ll dp[]){
-    if(n < 1) return 0;
-    if(n < 3) return 1;
-    if(walk == n)return dp[1];
-    ll tmp = dp[0] + dp[1];
-    dp[0] = dp[1];
-    dp[1] = tmp;
-    return fibdp(n, walk + 1, dp);
-
+    for(int i = 0; i < 3; i++)
+            return coinchange(amount - coin[i]) + coinchange(amount - coin[i]) + coinchange(amount - coin[i]);
 }
 
 int main(){
-    /*code goes here */
-    int test ;
-    ll n;
-    cin >> test;
-    while(test -- > 0){
-        ll *dp = new ll[2];
-        dp[0] = 1;
-        dp[1] = 1;
-        cin >> n;
-        cout << fibdp(n, 2, dp);
-        delete []dp;
-    }
+    /*code goes here*/
+    cout << coinchange(21);
+    // 3 7s
+    //2 10s + 1s
+    // all 1s
+    // 7 + 2*1s
+    // 10 + 7 + 4
     return 0;
 }
 
