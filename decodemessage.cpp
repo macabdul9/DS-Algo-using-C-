@@ -1,7 +1,7 @@
 /*
  * @author    : macab (macab@debian)
- * @file      : coinchange
- * @created   : Saturday Feb 16, 2019 03:35:02 IST
+ * @file      : decodemessage
+ * @created   : Saturday Feb 16, 2019 07:04:12 IST
 */
 #include<bits/stdc++.h>
 #define endl 		         "\n"
@@ -31,24 +31,16 @@
 typedef long long int ll;
 typedef unsigned int uint;
 using namespace std;
-
-int coinchange(int amount, vi coins){
-    if(!amount) return 0; //no amount left
-    if(amount < 1) return 0; //
-
-    //return coinchange(amount - 10) + coinchange(amount - 7) + coinchange(amount - 1);
-    for(int i = 0; i < coins.size(); i++)
-            return 1 + coinchange(amount - coins[i], coins);
+/*
+ * char a to z is mapped from 1 to 26 you are given some nome ie {1343}
+ * and you gotta find in how many ways this can be decode
+ * source :https://www.youtube.com/watch?v=qli-JCrSwuk&t=328s
+ */
+ll waystodecode(string str, int decode){
 
 }
-
 int main(){
     /*code goes here*/
-    vector<int> coins;
-    //coins.push_back(10);
-    coins = {10, 7, 1};
-    //cout << coins.size() << endl;
-    cout << coinchange(35, coins) << endl;
     return 0;
 }
 
