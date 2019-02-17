@@ -36,11 +36,20 @@ using namespace std;
  * and you gotta find in how many ways this can be decode
  * source :https://www.youtube.com/watch?v=qli-JCrSwuk&t=328s
  */
-ll waystodecode(string str, int decode){
+
+ll waystodecode(string str, int k){  // k will be string length
+    if(!k) return 1; // if string is empty
+    if(str[str.length() - k] == '0') return 0; // if first char is zero
+    ll result = waystodecode(str, k - 1);
+    if( k >= 2 and stoi(str.substr(str.length() - k, str.length() - k + 2)) <= 26)
+            result += waystodecode(str, k - 2);
+    return result;
 
 }
 int main(){
     /*code goes here*/
+    string data = "10";
+    cout << waystodecode(data, data.length());
     return 0;
 }
 
