@@ -32,23 +32,41 @@ typedef long long int ll;
 typedef unsigned int uint;
 using namespace std;
 
+mii mm;
+
 int coinchange(int amount, vi coins){
-    if(!amount) return 0; //no amount left
-    if(amount < 1) return 0; //
+    if(!amount) return 1; //no amount left
+    if(amount < 0) return 0; //
 
     //return coinchange(amount - 10) + coinchange(amount - 7) + coinchange(amount - 1);
-    for(int i = 0; i < coins.size(); i++)
-            return 1 + coinchange(amount - coins[i], coins);
-
+    for(int i = 0; i < coins.size(); i++){
+        int current = coinchange(amount - coins[i], coins);
+        if(!current)
+                continue;
+        else if(current == 1)
+                mm.insert(pii(amount, current));
+        else if(mm.find(amount - coins[i]) != mm.end()){
+                mm.insert(pii(amount, 1 + mm.at(amount - coins[i])));
+        }else{
+            coinchange(amount - coins[i], coins);
+        }
+    }
+    return mm.at(amount)->second;
 }
 
 int main(){
     /*code goes here*/
     vector<int> coins;
     //coins.push_back(10);
-    coins = {10, 7, 1};
+    coins = {2, 7, 10};
     //cout << coins.size() << endl;
-    cout << coinchange(35, coins) << endl;
+    coinchange(14, coins);
+    cout << mm.at(14) << endl;
+    //mii::iterator itr;
+    //cout << "key\tvalue" << endl;
+    //for(itr =  mm.begin(); itr != mm.end(); itr++)
+    //        cout << itr -> first << "\t" << itr -> second << endl;
+
     return 0;
 }
 
