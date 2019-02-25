@@ -43,9 +43,22 @@ int ways(int steps, int maxj){
 
     return ans;
 }
+int waysdp(int n, int maxj){
+    vi w(n); // this will store the max ways at each stepse by jumping (1-maxj)
+    w[0] = 1; // only one ways just stay
+    rloop(steps, 1, n){
+        w[steps] = 0;
+        rloop(j, 1, maxj){
+            if(steps - j >= 0)
+                w[steps] += w[steps - j];
+        }
+    }
+    return w[n];
+}
 int main(){
     /*code goes here*/
-    cout << ways(4, 4);
+    cout << ways(5, 5) << endl;
+    cout << waysdp(5, 5);
     return 0;
 }
 
