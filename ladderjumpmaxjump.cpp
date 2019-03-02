@@ -1,7 +1,7 @@
 /*
  * @author    : macab (macab@debian)
- * @file      : laddermaxjump
- * @created   : Tuesday Feb 26, 2019 03:39:52 IST
+ * @file      : ladderjumpmaxjump
+ * @created   : Saturday Mar 02, 2019 22:39:32 IST
 */
 #include<bits/stdc++.h>
 #define endl 		         "\n"
@@ -32,33 +32,32 @@ typedef long long int ll;
 typedef unsigned int uint;
 using namespace std;
 
-/*
- * description : total ways if max possible jump is given */
-int ways(int steps, int maxj){
-    if(!steps) return 1;
-    if(steps < 0) return 0;
-    int ans = 0;
-    rloop(i, 1, maxj)
-            ans += ways(steps - i, maxj);
-
-    return ans;
-}
-int waysdp(int n, int maxj){
-    vi w(n); // this will store the max ways at each stepse by jumping (1-maxj)
-    w[0] = 1; // only one ways just stay
-    rloop(steps, 1, n){
-        w[steps] = 0;
-        rloop(j, 1, maxj){
-            if(steps - j >= 0)
-                w[steps] += w[steps - j];
+int waystopdowndp(int steps, vi &dp, int maxjump){ // k is max jump
+    dp.push_back(1);
+    //dp.push_back(1);
+    //dp.push_back(2);
+    //dp.push_back(4);
+    for(int i = 1; i <= steps; i++){
+        // dp[i] = sum of last k if k > dp.size() else sum of dp
+        int ans = 0;
+        int limit = maxjump;
+        for(int j = dp.size() - 1; limit > 0; j--){
+                if(j < 0) break;
+                ans += dp[j];
+                limit--;
         }
+        dp.push_back(ans);
     }
-    return w[n];
+
+
+    return dp[steps];
 }
+
 int main(){
     /*code goes here*/
-    cout << ways(14, 14) << endl;
-    cout << waysdp(14, 14);
+    int steps = 14;
+    vi dp ;
+    cout << waystopdowndp(steps, dp, 14) << endl;
     return 0;
 }
 
