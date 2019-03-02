@@ -34,16 +34,14 @@ using namespace std;
 
 int waystopdowndp(int steps, vi &dp, int maxjump){ // k is max jump
     dp.push_back(1);
-    //dp.push_back(1);
-    //dp.push_back(2);
-    //dp.push_back(4);
+    // to reach ith step it will be sum of ways of last k steps
     for(int i = 1; i <= steps; i++){
         // dp[i] = sum of last k if k > dp.size() else sum of dp
         int ans = 0;
         int limit = maxjump;
         for(int j = dp.size() - 1; limit > 0; j--){
-                if(j < 0) break;
-                ans += dp[j];
+                if(j < 0) break; // if dp is smaller than the k itself
+                ans += dp[j]; // add
                 limit--;
         }
         dp.push_back(ans);
