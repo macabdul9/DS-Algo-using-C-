@@ -32,6 +32,8 @@ typedef long long int ll;
 typedef unsigned int uint;
 using namespace std;
 
+// time-comlexity : k^amount , which is huge
+
 int mincoinneeded(int amount, vi &coins){
     if(!amount) return 0; // if no amount left
     if(amount < 0) return MAX; // if amount is less than zero then this won't be a valid distribution
@@ -43,11 +45,29 @@ int mincoinneeded(int amount, vi &coins){
     }
     return min_coins;
 }
+// time comlexity - O(k.amount) k = coins.size()
+int mincoinbudp(int amount, vi &coins){
+    sort(coins.begin(), coins.end()); // sort the coins for convenient
+    vi dp(amount + 1, INT_MAX); // set a dp vector INT_MAX that it takes maximum for each
+    dp[0] = 0; // set 0
+    /*
+     * we can reach i amount of rupees from i - coins[k] (k = 0, 1, 3, .....coins.size() where i - coins[k] >= 0) hence dp[i] will be minimum of all */
+    rloop(i, 1, amount){
+        loop(j, 0, coins.size()){
+            if(i - coins[j] >= 0 and dp[i - coins[j]] < INT_MAX)
+                    dp[i] = min(dp[i], dp[i -  coins[j]] + 1);
+        }
+    }
+    return dp[amount];
+}
 int main(){
     /*code goes here*/
     vi coins;
-    coins = {1, 7, 19 , 10};
-    cout << mincoinneeded(38, coins) << endl;
+    coins = {2, 7, 10};
+    //int ans = mincoinneeded(27, coins);
+    //ans != MAX ? cout << ans << endl : cout << "NA" << endl;
+    int ans = mincoinbudp(81, coins);
+    ans != INT_MAX ? cout << ans << endl : cout << "NA" << endl;
     return 0;
 }
 
