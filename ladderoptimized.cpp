@@ -30,8 +30,10 @@
 #define umsi                  unordered_map<string, int>
 typedef long long int ll;
 typedef unsigned int uint;
+typedef unsigned long long int ull;
 using namespace std;
 
+//time complexity of this prob is O(n)
 int waystopdowndp(int steps, vi &dp, int maxjump){ // k is max jump
     dp.push_back(1);
     // to reach ith step it will be sum of ways of last k steps
@@ -46,16 +48,40 @@ int waystopdowndp(int steps, vi &dp, int maxjump){ // k is max jump
         }
         dp.push_back(ans);
     }
-
-
+    return dp[steps];
+}
+/*
+ * dp of nth will be sum of dp of last k alright !
+ * hence dp of (n + 1)th will also be dp of k alright !
+ * nth = dp[n - 1] + dp[n - 2] + .......+ dp[n - k];
+ * (n + 1)th = dp[n + 1 - 1] + dp[ n + 1 - 2] + ........dp[n + 1 - k];
+ *           = dp[n] + dp[n -1] + dp[n - 2] + ......dp[n + 1 - k];
+ *           = dp[n] + dp[n] - dp[n - k];
+ *  dp[n + 1] = 2*dp[n] - dp[n - k];
+ *
+ *  let's do it !
+ * */
+int waysoptimized(int steps, vi &dp, int k){ // k is maxjump
+    dp[0] = 1;
+    for(int i = 1; i <= steps; i++){
+        if(i - k >= 0)
+            dp[i] = 2*dp[i - 1] - dp[i - 1 - k];
+        else{ // took some help from above function
+            vi aux;
+            dp[i] = waystopdowndp(i, aux, k);
+        }
+    }
     return dp[steps];
 }
 
 int main(){
     /*code goes here*/
-    int steps = 14;
+    int steps = 20;
     vi dp ;
-    cout << waystopdowndp(steps, dp, 14) << endl;
+    cout << waystopdowndp(steps, dp, 17) << endl;
+    dp.clear();
+    cout << waysoptimized(steps, dp, 17) << endl;
+
     return 0;
 }
 

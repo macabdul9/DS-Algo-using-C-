@@ -57,8 +57,8 @@ int waysdp(int n, int maxj){
 }
 int main(){
     /*code goes here*/
-    cout << ways(14, 14) << endl;
-    cout << waysdp(14, 14);
+    cout << ways(20, 14) << endl;
+    cout << waysdp(20, 17);
     return 0;
 }
 
