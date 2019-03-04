@@ -33,18 +33,22 @@ typedef unsigned int uint;
 using namespace std;
 
 // time-comlexity : k^amount , which is huge
-
 int mincoinneeded(int amount, vi &coins){
     if(!amount) return 0; // if no amount left
     if(amount < 0) return MAX; // if amount is less than zero then this won't be a valid distribution
     int min_coins = MAX;
+    //int count = 0;
     loop(i, 0, coins.size()){
         int tmp = 1 + mincoinneeded(amount - coins[i], coins);
         if(tmp < min_coins)
                 min_coins = tmp;
     }
+
     return min_coins;
 }
+
+
+
 // time comlexity - O(k.amount) k = coins.size()
 int mincoinbudp(int amount, vi &coins){
     sort(coins.begin(), coins.end()); // sort the coins for convenient
@@ -60,13 +64,14 @@ int mincoinbudp(int amount, vi &coins){
     }
     return dp[amount];
 }
+
 int main(){
     /*code goes here*/
     vi coins;
-    coins = {2, 7, 10};
+    coins = {2, 3, 5, 6};
     //int ans = mincoinneeded(27, coins);
     //ans != MAX ? cout << ans << endl : cout << "NA" << endl;
-    int ans = mincoinbudp(81, coins);
+    int ans = mincoinneeded(10, coins);
     ans != INT_MAX ? cout << ans << endl : cout << "NA" << endl;
     return 0;
 }
