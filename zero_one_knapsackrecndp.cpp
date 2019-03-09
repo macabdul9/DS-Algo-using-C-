@@ -1,11 +1,11 @@
 /*
  * @author    : macab (macab@debian)
- * @file      : pallindromicpartition
- * @created   : Friday Mar 08, 2019 07:58:36 IST
+ * @file      : zero_one_knapsackrecndp
+ * @created   : Sunday Mar 10, 2019 01:08:11 IST
 */
 #include<bits/stdc++.h>
-#define endl 		         "\n"
-#define merge(a, b)           a##b 
+#define endl                  "\n"
+#define merge(a, b)           a##b
 #define loop(i,a,b)           for(int i=(int)a;i<(int)b;++i)
 #define rloop(i,a,b)          for(int i=(int)a;i<=(int)b;++i)
 #define loopl(i,a,b)          for(ll i=(ll)a;i<(ll)b;++i)
@@ -35,62 +35,55 @@ typedef long long int ll;
 typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
-/*
- * source :https://www.geeksforgeeks.org/given-a-string-print-all-possible-palindromic-partition
- * */
 
-bool isPallindrome(string s){
-    if(s.length() < 2) return true;
-    loop(i, 0, s.length() / 2){
-        if(s[i] != s[s.length() - 1 - i]) return false;
+
+int knapsack(vector<vector<int>> &item_list, int k, int current_max, int i){
+    // my implementation as per the algo
+    if(k < 0) return 0;
+    if(k == 0 or i == 0) return current_max;
+    return max(knapsack(item_list, k - item_list[i][0], item_list[i][1] + current_max, i - 1), knapsack(item_list,  k, current_max, i - 1));
+
+
+    /* more elegant looking code
+    // if bag if full or checked all items
+    if(k == 0 or n == 0) return 0;
+
+    int include = 0, exclude = 0;
+    // putting an item into the bag
+    if(k >= item_list[n - 1][0]){
+        include = item_list[n - 1][1] + knapsack(item_list, k - item_list[n - 1][0], n - 1);
     }
-    return true;
-}
+    // not putting an item into the bag
+    exclude = 0 + knapsack(item_list, k,  n - 1);
+    return max(include, exclude);
+    */
 
-void printlist(list<string> list){
-    if(list.size() == 0) return;
-
-    while(!list.empty()){
-        cout << list.front() << " ";
-        list.pop_front();
-    }
-    cout << endl;
-}
-
-void partitioning(string str, list<string> list){
-    if(str.length() == 0){
-            printlist(list);
-            return;
-    }
-
-    string s;
-    s.append(1, str[0]);
-    list.push_back(s);
-    partitioning(str.substr(1, str.length()), list);
-    list.pop_back();
-    s = list.back();
-    list.pop_back();
-    s.push_back(str[0]);
-    list.push_back(s);
-
-    partitioning(str.substr(1, str.length()), list);
 
 }
 
 int main(){
-    ios::sync_with_stdio(0);
-    int t;
-    string str = "itin";
-    list<string> list;
-    list.push_back("n");
-    partitioning(str, list);
-    /*
+	ios::sync_with_stdio(0);
+
+	/*your code goes here*/
+    int t, n, k, w, p;
     cin >> t;
     while(t-- > 0){
-        cin >> str;
-        cout << boolalpha << isPallindrome(str) << endl;
-    }*/
+        cin >> n >> k;
+        vector<vector<int>> item_list(n, vector<int>(2)); // 2d vector for weight - price
+        for(int i = 0; i < n; i++){
+            cin >> w >> p;
+            item_list[i][0] = w;
+            item_list[i][1] = p;
+        }
 
-    return 0;
+
+        cout << knapsack(item_list, k, 0, n - 1) << endl;
+
+
+
+        item_list.clear();
+
+    }
+	return 0;
 }
 
