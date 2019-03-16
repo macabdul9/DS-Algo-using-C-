@@ -36,20 +36,6 @@ typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
 
-/* structure of the node of the graph
-struct Node{
-    int data;
-    Node* link;
-};
-*/
-
-// adjacency list implementation using multiset
-
-// creating a node
-
-
-// insert a node with their adjacence node
-
 
 void insertNode(vector<vector<int>> &adjacency_list, map<int, int> &adjacency_map, int data, vector<int> &adjacent_nodes){ // adjacency map tells about the index of each node in adjacency list
 
