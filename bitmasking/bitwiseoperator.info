@@ -1,8 +1,14 @@
 
 Name              Symbol
 
+
+NOT         -       ~
 OR          -       |
 AND         -       |
 XOR         -       ^
 Right Shift -       >>
 Left Shift  -       <<
+
+
+
+
