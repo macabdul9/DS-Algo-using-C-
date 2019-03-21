@@ -36,6 +36,10 @@ typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
 
+int getithBit(int num , int ith){
+    return (num & (1 << ith)) != 0 ? 1 : 0;
+}
+
 int main(){
 	ios::sync_with_stdio(0);
 
@@ -44,11 +48,11 @@ int main(){
     int num, ith, mask, AND;
     while(true){
         cin >> num >> ith;
-        mask = (int)pow(2, ith); // creating a mask ....having only ith bit 1
+        mask = 1 << ith; // creating a mask ....having only ith bit 1
         AND = num & mask; // ANDing the number with mask so we get get ith bit rest 0
         AND = AND >> ith; // shift this AND by ith, 0th bit will be desired bit now
         AND = AND & 1;    // and it with 1 so we can get the answer !
-        cout << AND << endl;
+        cout << AND << "  "<< getithBit(num, ith) << endl;
     }
 	return 0;
 }
