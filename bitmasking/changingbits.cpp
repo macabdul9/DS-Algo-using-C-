@@ -42,6 +42,7 @@ using namespace std;
 
 
 // count the set bits in XOR of two number
+// this takes the O(n) time ...n is number of bits
 int countSetBits(int num){
 
     int count = 0;
@@ -50,10 +51,21 @@ int countSetBits(int num){
         num = num >> 1;
     }
     return count;
-
-
 }
 
+/*
+ * -- n&n-1 hack--
+ *  in this on each iteration one set bit get removed hence time complexity O(k) where K is number of set bits.
+ *  */
+int countSetBits1(int num){
+    int count = 0;
+    while(num > 0){
+        num = num & (num - 1);
+        count++;
+    }
+    return count;
+
+}
 
 
 int main(){
@@ -69,7 +81,7 @@ int main(){
 
         XOR = num1^num2;
 
-        cout << countSetBits(XOR) << endl;
+        cout << countSetBits(XOR)  << " " << countSetBits1(XOR)<< endl;
     }
 
 
