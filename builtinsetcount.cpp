@@ -1,7 +1,7 @@
 /*
  * @author    : macab (macab@debian)
- * @file      : extractingbit
- * @created   : Friday Mar 22, 2019 01:03:56 IST
+ * @file      : builtinsetcount
+ * @created   : Wednesday Mar 27, 2019 02:20:09 IST
 */
 #include<bits/stdc++.h>
 #define endl                  "\n"
@@ -36,24 +36,16 @@ typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
 
-int getithBit(int num , int ith){
-    return (num & (1 << ith)) != 0 ? 1 : 0;
-}
-
 int main(){
 	ios::sync_with_stdio(0);
 
-    // extract the ith bit of a number !
-
-    int num, ith, mask, AND;
+    uint n;
     while(true){
-        cin >> num >> ith;
-        mask = 1 << ith; // creating a mask ....having only ith bit 1
-        AND = num & mask; // ANDing the number with mask so we get get ith bit rest 0
-        AND = AND >> ith; // shift this AND by ith, 0th bit will be desired bit now
-        AND = AND & 1;    // and it with 1 so we can get the answer !
-        cout << AND << "  "<< getithBit(num, ith) << endl;
+        cin >> n;
+        cout<< __builtin_popcount(n) << endl ;
     }
+
+
 	return 0;
 }
 

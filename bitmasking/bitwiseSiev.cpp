@@ -1,7 +1,7 @@
 /*
  * @author    : macab (macab@debian)
- * @file      : xorswapping
- * @created   : Friday Mar 22, 2019 00:56:22 IST
+ * @file      : bitwiseSiev
+ * @created   : Sunday Mar 31, 2019 01:58:16 IST
 */
 #include<bits/stdc++.h>
 #define endl                  "\n"
@@ -39,16 +39,9 @@ using namespace std;
 int main(){
 	ios::sync_with_stdio(0);
 
-	/*your code goes here*/
-    int a, b;
-    while(true){
-        cin >> a >> b;
-        cout << "a = " << a << " b = " << b << endl;
-        a = a^b;
-        b = a^b;
-        a = a^b;
-        cout << "a = " << a << " b = " << b << endl;
-    }
+
+
+
 	return 0;
 }
 
