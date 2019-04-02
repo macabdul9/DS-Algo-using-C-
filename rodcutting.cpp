@@ -61,8 +61,30 @@ int getmaxrevn(vector<int> peice_length, vector<int> peice_price, int rod_length
     return max_revn;
 }
 
-int getmaxrevndp(vi peice_length, vi peice_price, int rod_length){
-    
+// time complexity for this function will be better exceed O(k*k*n)
+// if the cuts are not uniform like 1, 2, 3, 4.
+int getmaxrevnbottomupdp(vi peice_length, vi peice_price, int rod_length){
+    // if cut is not possible then we're saying that max revenue will be -1
+    // ie. cuts 3, 7  price 10, 20 rod_length = 4 then simply cut is not possible !
+    vi maxrev(rod_length + 1, MIN);
+    // max revenue for rod_length zero
+    maxrev[0] = 0;
+
+    int total_cuts = peice_length.size();
+
+    for(int i = 1; i <= rod_length; i++){
+        // check for all the points from where we can reach to the length i
+        for(int j = 0; j < i; j++){
+            // find a cut by which we can reach length i from that point,  mentioned above !
+            for(int k = 0; k < total_cuts; k++){
+                if(j + peice_length[k] == i and maxrev[j] != MIN){
+                    maxrev[i] = max(maxrev[i], maxrev[j] + peice_price[k]);
+                }
+            }
+        }
+    }
+
+    return maxrev[rod_length];
 }
 
 int main(){
@@ -85,7 +107,8 @@ int main(){
         }
         cin >> rod_length;
 
-        cout << getmaxrevn(peice_length, peice_price, rod_length) << endl;
+        cout << "by recursion "<< getmaxrevn(peice_length, peice_price, rod_length) << endl;
+        cout << "by bottom up dp " << getmaxrevnbottomupdp(peice_length, peice_price, rod_length) << endl;
         peice_length.clear();
         peice_price.clear();
     }
