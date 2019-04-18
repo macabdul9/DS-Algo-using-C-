@@ -115,7 +115,7 @@ int kmp(string str, string pattern){
 
 int main(){
 	ios::sync_with_stdio(0);
-    cout << naivepatternmatching("abcsdchfvscwejfhbdcdksavfvsldbfvdddbfv", "x") << " " << kmp("abcsdchfvscwejfhbdcdksavfvsldbfvdddbfv", "fv");
+    cout << naivepatternmatching("abcsdchfvscwejfhbdcdksavfvsldbfvdddbfv", "abcsdc") << " " << kmp("abcsdchfvscwejfhbdcdksavfvsldbfvdddbfv", "abcsdc");
     string pattern = "abcdabca";
     /*
     vi table = pi_table(pattern);
