@@ -101,8 +101,10 @@ int main(){
     g.addEdge("Delhi", "Banglore");
     g.addEdge("Ahmadabad", "Mumbai");
     g.addEdge("Mumbai", "Banglore");
+    g.addEdge("Mumbai", "Goa");
 
-   g.shortestPath("Amritsar", "Mumbai");
+   g.shortestPath("Lucknow", "Goa");
 	return 0;
 }
+
 
