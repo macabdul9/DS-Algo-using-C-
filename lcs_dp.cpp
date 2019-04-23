@@ -37,12 +37,33 @@ typedef unsigned long long int ull;
 using namespace std;
 /*
  * longest common subsequence prob using dynamic programming
+ * -- top-down approach !
  */
+
+// array to store each
+vector<vector<int>> dp(100, vector<int>(100, -1));
+
+
+int lcsDP(string s1, int i, string s2, int j){
+    if(s1[i] == '\0' or s2[j] == '\0') return 0;
+
+    if(dp[i][j] != -1)
+            return dp[i][j];
+    else if(s1[i] == s2[j]){
+            dp[i][j] = 1 + lcsDP(s1, i + 1, s2, j + 1);
+            return dp[i][j];
+    }
+    else{
+            dp[i][j] = max(lcsDP(s1, i + 1, s2, j), lcsDP(s1, i, s2 , j + 1));
+            return dp[i][j];
+    }
+}
 
 
 int main(){
 	ios::sync_with_stdio(0);
 
+    cout << lcsDP("abdace", 0, "babce", 0) << endl;
 
 
 	return 0;
