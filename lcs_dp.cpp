@@ -38,23 +38,26 @@ using namespace std;
 /*
  * longest common subsequence prob using dynamic programming
  * -- top-down approach !
+ *
  */
 
-// array to store each
-vector<vector<int>> dp(100, vector<int>(100, -1));
+/*
+ * ----optimization----
+ *  lcs using recursion takes exponetial time O(2^n) in worst case while
+ *  lcs using dp takes only O(n x m) time
+ */
 
-
-int lcsDP(string s1, int i, string s2, int j){
+int lcsDP(string s1, int i, string s2, int j, vector<vector<int>> &dp){
     if(s1[i] == '\0' or s2[j] == '\0') return 0;
 
     if(dp[i][j] != -1)
             return dp[i][j];
     else if(s1[i] == s2[j]){
-            dp[i][j] = 1 + lcsDP(s1, i + 1, s2, j + 1);
+            dp[i][j] = 1 + lcsDP(s1, i + 1, s2, j + 1, dp);
             return dp[i][j];
     }
     else{
-            dp[i][j] = max(lcsDP(s1, i + 1, s2, j), lcsDP(s1, i, s2 , j + 1));
+            dp[i][j] = max(lcsDP(s1, i + 1, s2, j, dp), lcsDP(s1, i, s2 , j + 1, dp));
             return dp[i][j];
     }
 }
@@ -63,8 +66,14 @@ int lcsDP(string s1, int i, string s2, int j){
 int main(){
 	ios::sync_with_stdio(0);
 
-    cout << lcsDP("abdace", 0, "babce", 0) << endl;
+    int l1, l2;
+    string s1, s2;
+    cin >> s1 >> s2;
+    l1 = s1.length();
+    l2 = s2.length();
+    vector<vector<int>> dp(l1, vector<int>(l2, -1));
 
+    cout << lcsDP(s1, 0, s2, 0, dp) << endl;
 
 	return 0;
 }
