@@ -15,5 +15,11 @@ int main(int argc, char const *argv[]) {
     cout << " true ";
   else
     cout << " false ";
+
+
+
+  string  s = "love";
+  a = "a";
+  cout << s;
   return 0;
 }
