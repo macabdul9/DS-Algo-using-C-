@@ -64,7 +64,7 @@ class Leaderboard{
         void shortestPath(int source, int dest){
             queue<int>  q;
             std::vector<bool> visited(this->V, false);
-            std::vector<int> parent(this->V);
+            vector<int> parent(this->V, -1);
 
             q.push(source);
             visited[source] = true;
@@ -79,54 +79,43 @@ class Leaderboard{
                     }
                 }
             }
-            for(auto path = dest; dest != source; dest = parent[dest])
-                cout << path << "<--";
-            cout << source << endl;
+            while(dest !=  -1){
+                cout << dest << "<--";
+                dest = parent[dest];
+            }
+
+            //cout << source << endl;
         }
 };
 
 int main(){
 	ios::sync_with_stdio(0);
 
-    // lets create the connectivity of leader board!
-    //
-    Leaderboard lb(36);
-    // connectvity of first block!
-    
-    for(int i = 0; i < 36; i++){
-        for(int j = i + 1; j <= i + 6 && j < 36; j++){
-            lb.addEdge(i, j);
+
+    Leaderboard lb(50);
+
+    int board[50] = {0};
+    board[2] = 13;
+    board[5] = 2;
+    board[9] = 18;
+    board[18] = 11;
+    board[17] = -13;
+    board[20] = -14;
+    board[24] = -8;
+    board[25] = -10;
+    board[32] = -2;
+    board[34] = -22;
+
+
+
+    for(int u = 0; u < 36; u++){
+        for(int dice = 1; dice <= 6; dice++){
+            int v = u + dice + board[u];
+            lb.addEdge(u, v);
         }
     }
-    // stair one
-    lb.addEdge(0, 14);
-    // stair two
-    for(int i = 0; i < 4; i++)
-        lb.addEdge(i, 6);
 
-    // stair three
-    for(int i = 2; i < 8; i++)
-        lb.addEdge(i, 26);
-
-    // stair four
-    for(int i = 0; i < 17; i++)
-        lb.addEdge(i, 28);
-
-    // lets talk about snakes !
-    // snake 1
-    lb.addEdge(16, 3);
-    // snake 2
-    lb.addEdge(19, 5);
-    // snake 3
-    lb.addEdge(23, 15);
-    // snake 4
-    lb.addEdge(31, 29);
-    // snake 5
-    lb.addEdge(33, 11);
-
-
-    lb.shortestPath(0, 35);
-
+    lb.shortestPath(25, 9);
 
 	return 0;
 }
