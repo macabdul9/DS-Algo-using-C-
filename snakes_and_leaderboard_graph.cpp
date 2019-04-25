@@ -110,12 +110,12 @@ int main(){
 
     for(int u = 0; u < 36; u++){
         for(int dice = 1; dice <= 6; dice++){
-            int v = u + dice + board[u];
+            int v = u + dice + board[u + dice];
             lb.addEdge(u, v);
         }
     }
 
-    lb.shortestPath(25, 9);
+    lb.shortestPath(0, 35);
 
 	return 0;
 }
