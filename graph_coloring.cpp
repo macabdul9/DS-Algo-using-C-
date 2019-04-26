@@ -35,11 +35,13 @@ typedef long long int ll;
 typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
+/*
+ * coloring of graph vertex
+ * depth first search
+ */
 
 int main(){
 	ios::sync_with_stdio(0);
-
-	
 
 
 	return 0;
