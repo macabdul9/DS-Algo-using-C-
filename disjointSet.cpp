@@ -1,7 +1,7 @@
 /*
  * @author    : macab (macab@debian)
  * @file      : disjointSet
- * @created   : Sunday Apr 28, 2019 21:25:03 IST
+ * @created   : Tuesday Apr 30, 2019 21:06:03 IST
 */
 #include<bits/stdc++.h>
 #define endl                  "\n"
@@ -36,10 +36,14 @@ typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
 
+/*
+ * disjoint set of data using union and path compression
+ */
+
+
 int main(){
 	ios::sync_with_stdio(0);
 
-	
 
 
 	return 0;
