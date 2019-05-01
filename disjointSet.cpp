@@ -56,6 +56,8 @@ struct Node{
 
 map<int, Node*> container;
 
+
+// time complexity of this function will be O(1) , as it takes no extra time(considering the fact that map assigning takes constant time)
 void makeSet(int data){
     Node* node = new Node();
     node->rank = 0;
@@ -64,6 +66,8 @@ void makeSet(int data){
     container[data] = node;
 }
 
+
+// find representative takes O() think
 Node* findHelper(Node* &node){
         if(node->parent == node)
                 return node;
@@ -76,6 +80,8 @@ Node* find(int data){
             return findHelper(container[data]);
 }
 
+
+// time complexity of union operation(union of two compressed set) will be contsant I say !
 void unionOfSet(int u, int v){
     Node *setA , *setB;
 
