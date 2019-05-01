@@ -40,31 +40,78 @@ using namespace std;
  * disjoint set of data using union and path compression
  */
 
-// each element of the set will be a node !
+//template<typename T>
+
 struct Node{
     int rank;
     int data;
     Node* parent;
 };
 
+
 /*
- * initially(set of single element) rank of the set will be one and parent(also called representative of that set) of that set
- * will be same node
+ * initially(set of single element) rank of the set will be zero and parent(also will be representative of that set)
+ * will be same node.
 */
-Node* makeSet(int data){
+
+map<int, Node*> container;
+
+void makeSet(int data){
     Node* node = new Node();
     node->rank = 0;
     node->data = data;
     node->parent = node;
-
-    return node;
+    //container.insert({data, node});
+    container[data] = node;
 }
 
+Node* findHelper(Node* &node){
+        if(node->parent == node)
+                return node;
+        else return findHelper(node->parent);
+
+}
+
+Node* find(int data){
+            return findHelper(container[data]);
+}
+
+void unionOfSet(int u, int v){
+    Node *setA , *setB;
+
+    setA = find(u);
+    setB = find(v);
+
+    if(setA->rank == setB->rank){
+        setB->parent = setA;
+        setA->rank += 1;
+        container[u] = setA;
+    }else if(setA->rank > setB->rank){
+        setB->parent = setA;
+        container[u] = setA;
+    }else{
+        setA->parent = setB;
+        container[v] = setB;
+    }
+
+}
 
 int main(){
 	ios::sync_with_stdio(0);
 
+    makeSet(1);
+    makeSet(2);
+    makeSet(3);
+    makeSet(4);
+    makeSet(5);
+    makeSet(6);
+    makeSet(7);
 
+    unionOfSet(1, 2);
+    unionOfSet(3, 4);
+    unionOfSet(2, 4);
+
+    cout << find(3)->data;
 
 	return 0;
 }
