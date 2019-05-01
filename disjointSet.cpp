@@ -40,6 +40,26 @@ using namespace std;
  * disjoint set of data using union and path compression
  */
 
+// each element of the set will be a node !
+struct Node{
+    int rank;
+    int data;
+    Node* parent;
+};
+
+/*
+ * initially(set of single element) rank of the set will be one and parent(also called representative of that set) of that set
+ * will be same node
+*/
+Node* makeSet(int data){
+    Node* node = new Node();
+    node->rank = 0;
+    node->data = data;
+    node->parent = node;
+
+    return node;
+}
+
 
 int main(){
 	ios::sync_with_stdio(0);
