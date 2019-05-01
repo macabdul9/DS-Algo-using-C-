@@ -39,8 +39,8 @@ using namespace std;
 /*
  * disjoint set of data using union and path compression
  */
+// source : https://www.youtube.com/watch?v=ID00PMy0-vE
 
-//template<typename T>
 
 struct Node{
     int rank;
@@ -61,14 +61,14 @@ void makeSet(int data){
     node->rank = 0;
     node->data = data;
     node->parent = node;
-    //container.insert({data, node});
     container[data] = node;
 }
 
 Node* findHelper(Node* &node){
         if(node->parent == node)
                 return node;
-        else return findHelper(node->parent);
+        // path compression : parent of each node will be the node whose parent is itself (called repreentative of the set)
+        node->parent = findHelper(node->parent);
 
 }
 
@@ -79,15 +79,17 @@ Node* find(int data){
 void unionOfSet(int u, int v){
     Node *setA , *setB;
 
+    // get the representative of the both sets
     setA = find(u);
     setB = find(v);
 
-    if(setA->rank == setB->rank){
+    // if representative of both sets are same it means they're already in same set so union is meaningless !
+    if(setA->data == setB->data) return;
+
+    if(setA->rank >= setB->rank){
         setB->parent = setA;
-        setA->rank += 1;
-        container[u] = setA;
-    }else if(setA->rank > setB->rank){
-        setB->parent = setA;
+        if(setA->rank == setB->rank)
+            setA->rank += 1;
         container[u] = setA;
     }else{
         setA->parent = setB;
@@ -98,7 +100,6 @@ void unionOfSet(int u, int v){
 
 int main(){
 	ios::sync_with_stdio(0);
-
     makeSet(1);
     makeSet(2);
     makeSet(3);
@@ -108,10 +109,25 @@ int main(){
     makeSet(7);
 
     unionOfSet(1, 2);
-    unionOfSet(3, 4);
-    unionOfSet(2, 4);
+    unionOfSet(2, 3);
+    unionOfSet(4, 5);
+    unionOfSet(6, 7);
+    unionOfSet(5, 6);
+    unionOfSet(3, 7);
 
-    cout << find(3)->data;
+    makeSet(11);
+    makeSet(12);
+    makeSet(13);
+    makeSet(14);
+
+
+    unionOfSet(11, 12);
+    unionOfSet(13, 14);
+    unionOfSet(11, 14);
+
+    unionOfSet(7, 14);
+
+    cout << find(14)->data << endl;
 
 	return 0;
 }
