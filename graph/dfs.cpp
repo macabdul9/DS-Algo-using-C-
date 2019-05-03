@@ -51,12 +51,12 @@ class Graph{
                     adjList[v].push_back(u);
         }
 
-        void bfs(int source, vector<bool> &visited){
+        void dfs(int source, vector<bool> &visited){
             cout << source << " ";
             visited[source] = true;
             for(auto neighbour : adjList[source]){
                 if(!visited[neighbour])
-                        bfs(neighbour, visited);
+                        dfs(neighbour, visited);
             }
         }
 };
@@ -64,17 +64,25 @@ class Graph{
 int main(){
 	ios::sync_with_stdio(0);
 
-    Graph g(4);
-    g.addEdge(0, 1);
-    g.addEdge(0, 2);
+    Graph g(11);
+
     g.addEdge(1, 2);
-    g.addEdge(2, 0);
+    g.addEdge(1, 4);
     g.addEdge(2, 3);
-    g.addEdge(3, 3);
+    g.addEdge(2, 5);
+    g.addEdge(2, 7);
+    g.addEdge(2, 8);
+    g.addEdge(3, 9);
+    g.addEdge(3, 10);
+    g.addEdge(4, 3);
+    g.addEdge(6, 5);
+    g.addEdge(5, 8);
+    g.addEdge(5, 7);
+    g.addEdge(7, 8);
 
-    vector<bool> visited(4, false);
+    vector<bool> visited(11, false);
 
-    g.bfs(2, visited);
+    g.dfs(2, visited);
 
 
 	return 0;
