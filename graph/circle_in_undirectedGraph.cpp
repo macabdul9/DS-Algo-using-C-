@@ -36,10 +36,13 @@ typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
 
+/*
+ * detecting a cycle in undirected graph using disjoint set
+ */
+
 int main(){
 	ios::sync_with_stdio(0);
 
-	
 
 
 	return 0;
