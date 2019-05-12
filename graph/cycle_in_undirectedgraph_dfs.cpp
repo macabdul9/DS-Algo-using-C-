@@ -52,14 +52,20 @@ class Graph{
         }
 
         void detectCycleDFS(int edge, vi &visited){
-            for(int i = 0; i < )
+            for(int i = 0; i < adjList[edge].size(); i++){
+                if(visited[adjList[edge][i]]){
+                        cout << "cycle";
+                }
+                else{
+                        visited[addEdge[edge][i]] = true;
+                        detectCycleDFS(adjList[edge][i], visited);
+                }
+            }
         }
 };
 
 int main(){
 	ios::sync_with_stdio(0);
-
-	
 
 
 	return 0;
