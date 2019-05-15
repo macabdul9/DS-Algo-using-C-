@@ -51,21 +51,40 @@ class Graph{
                     adjList[v].push_back(u);
         }
 
-        void detectCycleDFS(int edge, vi &visited){
-            for(int i = 0; i < adjList[edge].size(); i++){
-                if(visited[adjList[edge][i]]){
-                        cout << "cycle";
-                }
-                else{
-                        visited[addEdge[edge][i]] = true;
-                        detectCycleDFS(adjList[edge][i], visited);
-                }
+
+
+        bool hasCycleUtil(int u, vector<bool> &visited, int parent){
+            visited[u] = true;
+            for(int v : adjList[u]){
+                if(!visited[v])
+                        if(hasCycleUtil(v, visited, u))
+                                return true;
+
+                else if(v != parent)
+                        return true;
             }
+            return false;
         }
+
+        bool hasCycle(){
+		    vector<bool> visited(this->V, false);
+
+            if(hasCycleUtil(0, visited, -1))
+                    return true;
+            else
+                    return false;
+        }
+
 };
 
 int main(){
 	ios::sync_with_stdio(0);
+
+    Graph g(3);
+    g.addEdge(0, 1);
+
+
+    cout << boolalpha << g.hasCycle() << endl;
 
 
 	return 0;

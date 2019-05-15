@@ -37,19 +37,11 @@ typedef unsigned long long int ull;
 using namespace std;
 
 /*
- * source : https://www.youtube.com/watch?v=ID00PMy0-vE
- *
- * Disjoint sets using path compression and union by rank
- * Supports 3 operations
- * 1) makeSet
- * 2) union
- * 3) findSet
- *
- * For m operations and total n elements time complexity is O(m*f(n)) where f(n) is
- * very slowly growing function. For most cases f(n) <= 4 so effectively
- * total time will be O(m). Proof in Coreman book.
- *
+ * disjoint set of data using union and path compression
  */
+// source : https://www.youtube.com/watch?v=ID00PMy0-vE
+
+
 struct Node{
     int rank;
     int data;
@@ -75,7 +67,7 @@ void makeSet(int data){
 }
 
 
-// find representative takes O(n)
+// find representative takes O() think
 Node* findHelper(Node* &node){
         if(node->parent == node)
                 return node;
