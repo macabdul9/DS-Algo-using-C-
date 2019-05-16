@@ -1,0 +1,1 @@
+/home/macab/.vim/vimrc
