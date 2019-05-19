@@ -41,10 +41,13 @@ using namespace std;
  * then egg will  break
  */
 
+int drop(int floor, int egg){
+    if(egg == 0) return MAX;
+    if(egg == 1) return floor;
+}
+
 int main(){
 	ios::sync_with_stdio(0);
-
-	
 
 
 	return 0;
