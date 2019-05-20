@@ -44,6 +44,7 @@ using namespace std;
 int drop(int floor, int egg){
     if(egg == 0) return MAX;
     if(egg == 1) return floor;
+    if(floor == 1) return 1;
 }
 
 int main(){
