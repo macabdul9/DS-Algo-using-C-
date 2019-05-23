@@ -41,14 +41,75 @@ using namespace std;
  * then egg will  break
  */
 
-int drop(int floor, int egg){
-    if(egg == 0) return MAX;
-    if(egg == 1) return floor;
-    if(floor == 1) return 1;
+
+/* bottom-up dp */
+
+int drop(int eggs, int floors){
+    if(eggs == 0 or floors == 0) return -1;
+
+    vector<vi> sol(eggs + 1, vi(floors + 1, 0));
+
+    for(int i = 0; i <= floors; i++)
+            sol[1][i] = i;
+    for(int i = 1; i <= eggs; i++)
+            sol[i][1] = 1;
+
+    /*
+    for(int i = 0; i <= eggs; i++){
+        for(int j = 0; j <= floors ; j++)
+                cout << sol[i][j] << " ";
+        cout << endl;
+    }
+    */
+
+    for(int e = 2; e <= eggs; e++){
+        for(int f = 2; f <= floors; f++){
+            sol[e][f] = MAX;
+            for(int k = 1; k <= f; k++){
+                sol[e][f] = min(sol[e][f], 1 + max(sol[e - 1][k - 1], sol[e][f - k ]));
+            }
+        }
+    }
+
+
+    /*
+    cout << endl;
+    for(int i = 0; i <= eggs; i++){
+        for(int j = 0; j <= floors ; j++)
+                cout << sol[i][j] << " ";
+        cout << endl;
+    }
+    */
+
+    return sol[eggs][floors];
+}
+
+
+int calculateRecursive(int eggs, int floors){
+        if(eggs == 1){
+            return floors;
+        }
+        if(floors == 0){
+            return 0;
+        }
+        int min = 1000;
+        for(int i=1; i <= floors; i++){
+            int val = 1 + max(calculateRecursive(eggs-1, i-1),calculateRecursive(eggs, floors-i));
+            if(val < min){
+                min = val;
+            }
+        }
+        return min;
 }
 
 int main(){
 	ios::sync_with_stdio(0);
+
+    unsigned int eggs, floors;
+    cin >> eggs >> floors;
+    cout << drop(eggs, floors) << endl;
+
+
 
 
 	return 0;
