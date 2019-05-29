@@ -36,7 +36,27 @@ typedef unsigned int uint;
 typedef unsigned long long int ull;
 using namespace std;
 
-class Graph{};
+class Graph{
+        list<int>* adjList;
+        public:
+        Graph(int V){
+                adjList = new list<int>[V];
+        }
+        void addEdge(int u, int v, bool isBiDir = true){
+                adjList[u].push_back(v);
+                if(isBiDir)
+                        adjList[v].push_back(u);
+        }
+
+        bool hasCycleHelper(){
+
+        }
+        bool hasCycle(list<int>* adjList, int edge, int incoming, vector<bool> &visited){
+                visited[edge] = true;
+
+
+        }
+};
 
 int main(){
 	ios::sync_with_stdio(0);
