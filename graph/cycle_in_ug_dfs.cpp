@@ -37,9 +37,11 @@ typedef unsigned long long int ull;
 using namespace std;
 
 class Graph{
-        list<int>* adjList;
+        list<int> *adjList;
+        int V;
         public:
-        Graph(int V){
+        Graph(int v){
+                this->V = v;
                 adjList = new list<int>[V];
         }
         void addEdge(int u, int v, bool isBiDir = true){
@@ -48,18 +50,44 @@ class Graph{
                         adjList[v].push_back(u);
         }
 
-        bool hasCycleHelper(){
+        bool hasCycleHelper(int currentVertex, int incomingVertex, vector<bool> &visited){
+                /* mark the current vertex visited */
+                visited[currentVertex] = true;
+
+                /* 
+                 * for each adjacent vertex of the current vertex if there exit a vertex which 
+                 * is visited and it is not incoming vertex it means there's cycle.
+                 */
+                for(int adjacentVertex: adjList[currentVertex]){
+                        if(!visited[adjacentVertex]){
+                                if(hasCycleHelper(adjacentVertex, currentVertex, visited))
+                                        return true;
+                        }else if(adjacentVertex !=  incomingVertex)
+                                return true;
+                }
+                return false;
 
         }
-        bool hasCycle(list<int>* adjList, int edge, int incoming, vector<bool> &visited){
-                visited[edge] = true;
-
-
+        bool hasCycle(int currentVertex, int incomingVertex){
+                vector<bool> visited(this->V, false);
+                return hasCycleHelper(currentVertex, incomingVertex, visited);
+                
         }
 };
 
 int main(){
 	ios::sync_with_stdio(0);
+
+    Graph g(6);
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(2, 3);
+    g.addEdge(2, 5);
+    g.addEdge(3, 4);
+    g.addEdge(4, 5);
+
+    cout << boolalpha << g.hasCycle(0, -1) << endl;
+
 
 
 	return 0;
