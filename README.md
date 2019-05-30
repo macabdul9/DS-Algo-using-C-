@@ -13,5 +13,5 @@ max: maximum\
 lcs : longest common subsequence\
 fib: fibnacci\
 kmp: Knuth-Morris-Pratt\
-bst : binary search tree\
+bst : binary search tree
 
