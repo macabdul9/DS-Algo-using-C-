@@ -84,7 +84,7 @@ int main(){
     g.addEdge(2, 3);
     g.addEdge(2, 5);
     g.addEdge(3, 4);
-    g.addEdge(4, 5);
+    //g.addEdge(4, 5);
 
     cout << boolalpha << g.hasCycle(0, -1) << endl;
 
