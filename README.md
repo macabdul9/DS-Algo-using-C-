@@ -1,5 +1,5 @@
 # DS-Algo-using-CPP
-This repository contains some well known DS and Algo implementation in C++
+This repository contains some well known DS and Algo implementation in C++.
 
 
 # abbrevation guide
@@ -11,7 +11,7 @@ dg: directed graph\
 min: minimum\
 max: maximum\
 lcs : longest common subsequence\
-fib: fibnacci\
+fib: fibonacci\
 kmp: Knuth-Morris-Pratt\
 bst : binary search tree
 
